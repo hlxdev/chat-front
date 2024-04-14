@@ -7,18 +7,53 @@ import messageAudioEffect from '../assets/sounds/message-tap.mp3'
 const audio = new Audio(messageAudioEffect)
 
 export function SendMessageForm() {
-  const { request, execute } = useRequest()
+  const { request, execute, clearErrors } = useRequest()
   const [content, setContent] = useState('')
+  const contentLength = content.replace('\n\n', '\n').length
 
   const username = useUsername()
 
   const divRef = useRef<HTMLDivElement>(null)
 
+  const updateContent = (text: string, paste: boolean = false) => {
+    const formattedText = text.replace(/<br>/g, '\n')
+
+    if (request.error) {
+      clearErrors()
+    }
+
+    if (paste) {
+      setContent(`${content}${formattedText}`)
+    } else {
+      setContent(formattedText)
+    }
+  }
+
+  const handlePaste = (event: React.ClipboardEvent<HTMLDivElement>) => {
+    event.preventDefault()
+
+    const text = event.clipboardData.getData('text/plain')
+
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0)
+      range.deleteContents()
+      range.insertNode(document.createTextNode(text))
+
+      range.selectNodeContents(divRef.current!)
+      range.collapse(false)
+      selection.removeAllRanges()
+      selection.addRange(range)
+
+      updateContent(text, true)
+    }
+
+  };
+
   const handleInput = (event: FormEvent<HTMLDivElement>) => {
     const text = event.currentTarget.innerHTML;
-    const formattedText = text.replace(/<br>/g, '\n');
 
-    setContent(formattedText)
+    updateContent(text)
   }
 
   const handleClick = () => {
@@ -33,9 +68,12 @@ export function SendMessageForm() {
     }
   }
 
-  const handleSendMessage = async () => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
     const contentFormatted = content.trim()
-    if (request.status === 'loading' || !contentFormatted.length) return
+
+    if (!contentFormatted.length) return
 
     execute('/message', {
       method: 'POST',
@@ -55,27 +93,35 @@ export function SendMessageForm() {
 
   return (
     <div className="flex flex-col p-4">
-      <div className="flex items-start gap-2 relative">
-        <div
-          ref={divRef}
-          contentEditable
-          data-placeholder={'Digite algo interessante...'}
-          onInput={handleInput}
-          onClick={handleClick}
-          className="border border-neutral-500 rounded-lg flex-1 text-sm p-2 overflow-y-auto max-h-48 cursor-text"
-        />
+      <form onSubmit={handleSubmit}>
+        <div className="flex items-start gap-2 relative">
+          <div
+            ref={divRef}
+            contentEditable
+            data-placeholder={'Digite algo interessante...'}
+            onInput={handleInput}
+            onClick={handleClick}
+            onPaste={handlePaste}
+            className="border border-neutral-500 rounded-lg text-sm p-2 overflow-y-auto max-h-48 cursor-text whitespace-pre-wrap flex-1 break-all"
+          />
 
-        <button
-          type="button"
-          onClick={handleSendMessage}
-          className={`w-[38px] h-[38px] flex items-center justify-center ${request.status === 'loading' || !content.trim().length ? 'opacity-40' : 'hover:bg-cyan-300'} bg-cyan-500 text-cyan-900 rounded-lg transition-colors`}
-        >
-          <PaperPlaneTilt weight="fill" size={22} />
-        </button>
+          <button
+            type="submit"
+            disabled={request.status === 'loading' || !contentLength || contentLength > 300}
+            className={`w-[38px] h-[38px] flex items-center justify-center disabled:opacity-40 hover:bg-cyan-300 bg-cyan-500 text-cyan-900 rounded-lg transition-colors`}
+          >
+            <PaperPlaneTilt weight="fill" size={22} />
+          </button>
+        </div>
+      </form>
+
+      <div className="text-xs text-neutral-400 px-0.5 pt-2">
+        <span className={`${contentLength > 300 ? 'text-red-400' : ''}`}>{contentLength}</span> / 300
       </div>
-      {request.status === 'error' && (
-        <span className="p-2 rounded-lg bg-red-500/30 text-red-300 text-sm text-center max-w-72 mt-2">
-          Ocorreu um erro ao enviar a mensagem, tente novamente.
+
+      {request.error && (
+        <span className="p-2 rounded-lg bg-red-500/30 text-red-300 text-[13px] w-full mt-2 text-start">
+          {request.error}
         </span>
       )}
     </div>

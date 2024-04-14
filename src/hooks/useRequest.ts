@@ -39,9 +39,13 @@ export const useRequest = () => {
       })
   }
 
+  const clearErrors = () => {
+    setRequest({ ...request, error: null })
+  }
+
   const update = (newValue: unknown) => {
     setRequest({ ...request, data: newValue })
   }
 
-  return { request, execute, update }
+  return { request, execute, update, clearErrors }
 }
