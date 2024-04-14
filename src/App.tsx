@@ -92,7 +92,7 @@ function App() {
       <div className="w-screen h-screen flex items-center justify-center p-4">
         <main>
           {username && (
-            <div className="flex w-full h-full relative border border-neutral-800 rounded-xl overflow-hidden">
+            <div className="flex w-full h-full relative border border-neutral-800 rounded-xl overflow-hidden max-w-[400px]">
               <div className="flex flex-col">
                 {isWebsocketClosed ? (
                   <RetryWebsocket resetWsState={() => setWebsocketState(0)} />

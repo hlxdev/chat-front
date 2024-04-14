@@ -27,10 +27,10 @@ export function MessageItem({ ...message }: Props) {
         </div>
       )}
       <div className="flex flex-wrap items-end gap-1.5">
-        <span className={`break-words overflow-x-hidden w-fit py-1 px-2 rounded-tl rounded-b-2xl rounded-tr-2xl text-sm ${isAuthor ? 'bg-cyan-600' : 'bg-neutral-700'}`}>
-          {paragraphs.map(p => (
+        <span className={`break-all overflow-x-hidden w-fit py-1 px-2 rounded-tl rounded-b-2xl rounded-tr-2xl text-sm ${isAuthor ? 'bg-cyan-600' : 'bg-neutral-700'}`}>
+          {paragraphs.map(paragraph => (
             <>
-              {p}
+              {paragraph}
               <br />
             </>
           ))}
