@@ -47,25 +47,12 @@ export function SendMessageForm() {
 
       updateContent(text, true)
     }
-
   };
 
   const handleInput = (event: FormEvent<HTMLDivElement>) => {
     const text = event.currentTarget.innerHTML;
 
     updateContent(text)
-  }
-
-  const handleClick = () => {
-    if (!document.getSelection()?.anchorNode) {
-      const range = document.createRange();
-      range.selectNodeContents(divRef.current!);
-      range.collapse(true);
-      const sel = window.getSelection();
-
-      sel!.removeAllRanges();
-      sel!.addRange(range);
-    }
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -100,7 +87,6 @@ export function SendMessageForm() {
             contentEditable
             data-placeholder={'Digite algo interessante...'}
             onInput={handleInput}
-            onClick={handleClick}
             onPaste={handlePaste}
             className="border border-neutral-500 rounded-lg text-sm p-2 overflow-y-auto max-h-48 cursor-text whitespace-pre-wrap flex-1 break-all"
           />
