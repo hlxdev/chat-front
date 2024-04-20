@@ -23,7 +23,7 @@ export function MessageItem({ ...message }: Props) {
             alt={message.author}
             className="w-[24px] h-[24px] rounded-full"
           />
-          <span className={`-mt-0.5 block text-sm font-medium ${isAuthor ? 'text-blue-500' : 'text-inherit'}`}>{message.author}</span>
+          <span className={`-mt-0.5 block text-sm font-medium truncate overflow-hidden ${isAuthor ? 'text-blue-500' : 'text-inherit'}`}>{message.author}</span>
         </div>
       )}
       <div className="flex flex-wrap items-end gap-1.5">

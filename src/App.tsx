@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { MessagesList } from "./components/MessagesList"
 import { UsernameModalForm } from "./components/UsernameModalForm"
 import { useUsername } from "./hooks/useUsername"
@@ -61,7 +61,6 @@ function App() {
 
       if (data.name === 'messageSent') {
         if (data.removeOld) {
-          console.log(true)
           setInfo(current => ({ ...current, messages: [...current.messages.slice(1), data.message] }))
         } else {
           setInfo(current => ({ ...current, messages: [...current.messages, data.message] }))
@@ -89,10 +88,10 @@ function App() {
     )
   } else {
     return (
-      <div className="w-screen h-screen flex items-center justify-center p-4">
+      <div className="w-screen h-screen flex items-center justify-center p-2">
         <main>
           {username && (
-            <div className="flex w-full h-full relative border border-neutral-800 rounded-xl overflow-hidden max-w-[400px]">
+            <div className="flex w-full h-full relative border border-neutral-800 rounded-xl overflow-hidden">
               <div className="flex flex-col">
                 {isWebsocketClosed ? (
                   <RetryWebsocket resetWsState={() => setWebsocketState(0)} />
@@ -102,7 +101,7 @@ function App() {
                       <Loader />
                     </div>
                   ) : (
-                    <Fragment>
+                    <div className="flex flex-col w-[300px] md:max-w-96 md:w-auto max-h-[620px]">
                       <ChatHeader
                         usersCount={info.usersCount}
                         showUsersList={showUsersList}
@@ -110,18 +109,18 @@ function App() {
                       />
                       <MessagesList messages={info.messages} />
                       <SendMessageForm />
-                    </Fragment>
+                    </div>
                   )
                 )}
               </div>
               {showUsersList && (
-                <div className="flex absolute pt-12 md:p-0 w-full h-full bg-[var(--background)] md:relative md:border-l md:border-neutral-800 md:h-auto">
+                <div className="flex absolute pt-12 md:p-0 md:w-auto w-full h-full bg-[var(--background)] md:relative md:border-l md:border-neutral-800 md:h-auto">
                   <UsersList />
                 </div>
               )}
             </div>
           )}
-        </main >
+        </main>
       </div >
     )
   }

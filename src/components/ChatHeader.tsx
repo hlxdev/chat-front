@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
 import { useUsername } from "../hooks/useUsername"
-import { Profile } from "./Profile"
 import { CaretRight } from "./icons/CaretRight"
 
 interface Props {
@@ -18,7 +17,9 @@ export function ChatHeader({ usersCount, showUsersList, setShowUsersList }: Prop
   return (
     <header className="pb-2 flex justify-between px-6 py-2 w-full h-12 relative border-b border-neutral-800 z-50">
       {username && (
-        <Profile />
+        <div className="flex items-center gap-2 text-lg overflow-hidden pr-4 flex-1">
+          <p className="truncate">{username}</p>
+        </div>
       )}
       <button
         onClick={toggleUsersList}

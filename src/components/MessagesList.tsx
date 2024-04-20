@@ -8,10 +8,8 @@ interface Props {
 export function MessagesList({ messages }: Props) {
   const username = useUsername()
 
-  console.log(messages)
-
   return (
-    <div className="min-h-[400px] min-w-[300px] flex flex-col overflow-y-auto py-2">
+    <div className="flex flex-col overflow-y-auto py-2 min-h-72">
       {messages.map((message, index) => (
         <MessageItem
           key={message.id}
