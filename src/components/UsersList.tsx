@@ -16,11 +16,11 @@ export function UsersList() {
         const handler = (event: any) => {
           const data = JSON.parse(event.data)
 
-          if (data.name === 'userJoin') {
+          if (data.name === 'userJoin' && !data.repeatedConn) {
             update([...users, data.user])
           }
 
-          if (data.name === 'userLeft') {
+          if (data.name === 'userLeft' && !data.repeatedConn) {
             update(users.filter(u => u !== data.user))
           }
         }
