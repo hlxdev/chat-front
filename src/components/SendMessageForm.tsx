@@ -3,6 +3,7 @@ import { FormEvent, useRef, useState } from "react"
 import { useRequest } from "../hooks/useRequest"
 import { useUsername } from "../hooks/useUsername"
 import messageAudioEffect from '../assets/sounds/message-tap.mp3'
+import he from 'he'
 
 const audio = new Audio(messageAudioEffect)
 
@@ -16,16 +17,16 @@ export function SendMessageForm() {
   const divRef = useRef<HTMLDivElement>(null)
 
   const updateContent = (text: string, paste: boolean = false) => {
-    const formattedText = text.replace(/<br>/g, '\n')
+    const decodedText = he.decode(text)
 
     if (request.error) {
       clearErrors()
     }
 
     if (paste) {
-      setContent(`${content}${formattedText}`)
+      setContent(`${content}${decodedText}`)
     } else {
-      setContent(formattedText)
+      setContent(decodedText)
     }
   }
 
