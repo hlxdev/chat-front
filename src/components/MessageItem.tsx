@@ -27,17 +27,17 @@ export function MessageItem({ ...message }: Props) {
         </div>
       )}
       <div className="flex flex-wrap items-end gap-1.5">
-        <span className={`break-all overflow-x-hidden w-fit py-1 px-2 rounded-tl rounded-b-2xl rounded-tr-2xl text-sm ${isAuthor ? 'bg-cyan-600' : 'bg-neutral-700'}`}>
+        <span className={`break-all overflow-x-hidden w-fit py-1 px-2 rounded-tl rounded-b-[14px] rounded-tr-[14px] text-sm ${isAuthor ? 'bg-cyan-700' : 'bg-neutral-700'}`}>
           {paragraphs.map(paragraph => (
             <>
               {paragraph}
               <br />
             </>
           ))}
-        </span>
 
-        <span className="text-neutral-500 mb-[5px] hidden text-xs group-hover/item:block">
-          {formatDate(message.createdAt)}
+          <span className={`mb-[5px] font-medium text-[10px] ${isAuthor ? 'text-cyan-100' : 'text-neutral-300'}`}>
+            {formatDate(message.createdAt)}
+          </span>
         </span>
       </div>
     </div>
