@@ -1,5 +1,5 @@
 import { PaperPlaneTilt } from "@phosphor-icons/react"
-import { FormEvent, useRef, useState } from "react"
+import { FormEvent, KeyboardEvent, useRef, useState } from "react"
 import { useRequest } from "../hooks/useRequest"
 import { useUsername } from "../hooks/useUsername"
 import messageAudioEffect from '../assets/sounds/message-tap.mp3'
@@ -79,6 +79,13 @@ export function SendMessageForm() {
     })
   }
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      document.execCommand('insertLineBreak')
+    }
+  }
+
   return (
     <div className="flex flex-col p-4">
       <form onSubmit={handleSubmit}>
@@ -88,6 +95,7 @@ export function SendMessageForm() {
             contentEditable
             data-placeholder={'Digite algo interessante...'}
             onInput={handleInput}
+            onKeyDown={handleKeyDown}
             onPaste={handlePaste}
             className="border border-neutral-500 rounded-lg text-sm p-2 overflow-y-auto max-h-48 cursor-text whitespace-pre-wrap flex-1 break-all"
           />
