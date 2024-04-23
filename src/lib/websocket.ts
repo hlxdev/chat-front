@@ -1,13 +1,15 @@
+type MessageHandler = (event: MessageEvent) => void;
+
 const baseWs = import.meta.env.VITE_API_WS
 
 let socket: WebSocket | null = null
-const messageHandlers = new Set();
+const messageHandlers = new Set<MessageHandler>();
 
-export const addMessageHandler = (handler: any) => {
+export const addMessageHandler = (handler: MessageHandler) => {
   messageHandlers.add(handler);
 };
 
-export const removeMessageHandler = (handler: any) => {
+export const removeMessageHandler = (handler: MessageHandler) => {
   messageHandlers.delete(handler);
 };
 
@@ -25,8 +27,7 @@ export const connectWebsocket = () => {
   socket = websocket
 
   socket!.onmessage = (event) => {
-    console.log('EVENTO:', messageHandlers)
-    messageHandlers.forEach((handler: any) => handler(event));
+    messageHandlers.forEach((handler: MessageHandler) => handler(event));
   }
 }
 

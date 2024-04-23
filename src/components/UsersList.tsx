@@ -13,7 +13,7 @@ export function UsersList() {
   useEffect(() => {
     execute('/users', { method: 'GET' }).then((users: string[]) => {
       if (socket) {
-        const handler = (event: any) => {
+        const handler = (event: MessageEvent) => {
           const data = JSON.parse(event.data)
 
           if (data.name === 'userJoin' && !data.repeatedConn) {
