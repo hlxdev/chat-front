@@ -32,9 +32,9 @@ export function UsersList() {
   }, [])
 
   return (
-    <div className="p-4 rounded-lg w-full self-stretch max-w-64">
+    <div className="rounded-lg overflow-y-auto w-full">
       {!!users?.length && (
-        <ul className="space-y-2">
+        <ul className="space-y-2 p-4">
           {users.map(user => (
             <li key={user} className="flex items-center gap-2 text-sm">
               <img
@@ -42,14 +42,12 @@ export function UsersList() {
                 alt={user}
                 className="w-[22px] h-[22px] rounded-full"
               />
-              <div className="space-x-2 truncate">
-                <span>{user}</span>
-                {user === username && (
-                  <span className="text-xs px-1 rounded-xl text-cyan-400 bg-cyan-900/30">
-                    Você
-                  </span>
-                )}
-              </div>
+              <span className="truncate">{user}</span>
+              {user === username && (
+                <span className="text-xs px-1 rounded-xl text-cyan-400 bg-cyan-900/30">
+                  Você
+                </span>
+              )}
             </li>
           ))}
         </ul>

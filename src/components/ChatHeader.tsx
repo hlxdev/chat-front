@@ -18,7 +18,7 @@ export function ChatHeader({ usersCount, showUsersList, setShowUsersList }: Prop
     <header className="pb-2 flex justify-between px-6 py-2 w-full h-12 relative border-b border-neutral-800 z-50">
       {username && (
         <div className="flex items-center gap-2 text-lg overflow-hidden pr-4 flex-1">
-          <p className="truncate">{username}</p>
+          <p className="truncate max-w-[150px]">{username}</p>
         </div>
       )}
       <button

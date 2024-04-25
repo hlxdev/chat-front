@@ -9,7 +9,7 @@ export function MessagesList({ messages }: Props) {
   const username = useUsername()
 
   return (
-    <div className="flex flex-col overflow-y-auto py-2 min-h-72">
+    <div className="flex flex-col overflow-y-auto py-2 h-full">
       {messages.map((message, index) => (
         <MessageItem
           key={message.id}

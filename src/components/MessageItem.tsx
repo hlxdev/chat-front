@@ -15,7 +15,7 @@ export function MessageItem({ ...message }: Props) {
   const paragraphs = message.content.split('\n')
 
   return (
-    <div className={`flex flex-col ${!message.stack && message.index > 0 ? 'mt-4' : ''} hover:bg-neutral-900 px-6 py-0.5 group/item space-y-1`}>
+    <div className={`flex flex-1 flex-col ${!message.stack && message.index > 0 ? 'mt-4' : ''} px-4 py-0.5 group/item space-y-1`}>
       {!message.stack && (
         <div className="flex justify-start items-start gap-2">
           <img
@@ -26,7 +26,7 @@ export function MessageItem({ ...message }: Props) {
           <span className={`-mt-0.5 block text-sm font-medium truncate overflow-hidden ${isAuthor ? 'text-blue-500' : 'text-inherit'}`}>{message.author}</span>
         </div>
       )}
-      <div className="flex flex-wrap items-end gap-1.5">
+      <div className="flex items-center gap-1.5">
         <span className={`break-all overflow-x-hidden w-fit py-1 px-2 rounded-tl rounded-b-[14px] rounded-tr-[14px] text-sm ${isAuthor ? 'bg-cyan-700' : 'bg-neutral-700'}`}>
           {paragraphs.map(paragraph => (
             <>

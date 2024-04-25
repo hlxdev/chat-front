@@ -89,10 +89,10 @@ function App() {
   } else {
     return (
       <div className="w-screen h-screen flex items-center justify-center p-2">
-        <main>
+        <main className="w-full h-full">
           {username && (
-            <div className="flex w-full h-full relative border border-neutral-800 rounded-xl overflow-hidden">
-              <div className="flex flex-col">
+            <div className="flex w-full md:h-full h-[calc(100%-60px)] border border-neutral-800 rounded-xl overflow-hidden relative">
+              <div className="flex flex-col w-full" >
                 {isWebsocketClosed ? (
                   <RetryWebsocket resetWsState={() => setWebsocketState(0)} />
                 ) : (
@@ -101,7 +101,7 @@ function App() {
                       <Loader />
                     </div>
                   ) : (
-                    <div className="flex flex-col w-[300px] md:max-w-96 md:w-auto max-h-[620px]">
+                    <div className="flex flex-col h-full">
                       <ChatHeader
                         usersCount={info.usersCount}
                         showUsersList={showUsersList}
@@ -114,14 +114,14 @@ function App() {
                 )}
               </div>
               {showUsersList && (
-                <div className="flex absolute pt-12 md:p-0 md:w-auto w-full h-full bg-[var(--background)] md:relative md:border-l md:border-neutral-800 md:h-auto">
+                <div className="flex absolute pt-12 md:pt-0 md:w-[300px] w-full h-full bg-[var(--background)] md:relative md:border-l md:border-neutral-800 md:h-auto">
                   <UsersList />
                 </div>
               )}
             </div>
           )}
         </main>
-      </div >
+      </div>
     )
   }
 }
