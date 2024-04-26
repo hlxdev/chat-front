@@ -15,7 +15,7 @@ export function MessageItem({ ...message }: Props) {
   const paragraphs = message.content.split('\n')
 
   return (
-    <div className={`flex flex-1 flex-col ${!message.stack && message.index > 0 ? 'mt-4' : ''} px-4 py-0.5 group/item space-y-1`}>
+    <div className={`flex flex-col ${!message.stack && message.index > 0 ? 'mt-4' : ''} px-4 py-0.5 group/item space-y-1`}>
       {!message.stack && (
         <div className="flex justify-start items-start gap-2">
           <img
